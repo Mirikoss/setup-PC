@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ultimate Setup Checklist</title>
+<style>
+:root{--bg:#080b10;--card:#111720;--line:#26303d;--text:#f4f6f8;--muted:#8994a3;--accent:#9fc7ff;--green:#35d39a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#182033 0,#080b10 42%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;padding:20px 14px 50px}.wrap{max-width:760px;margin:auto}.hero{padding:10px 4px 22px}h1{font-size:30px;margin:0 0 7px;letter-spacing:-.8px}.sub{color:var(--muted);font-size:14px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:18px}.stat{background:#111720e6;border:1px solid var(--line);border-radius:15px;padding:13px 10px}.stat b{display:block;font-size:19px}.stat span{font-size:11px;color:var(--muted)}.category{margin:22px 0 10px;color:#d9dce2;font-size:13px;font-weight:800;letter-spacing:.5px}.item{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;background:#111720f0;border:1px solid var(--line);border-radius:14px;padding:12px 11px;margin:7px 0}.item.done{border-color:#1d5d49;background:#0d221de6}.check{width:25px;height:25px;border:1px solid #596474;border-radius:8px;background:#0b0f15;color:transparent;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;cursor:pointer}.done .check{background:var(--green);border-color:var(--green);color:#06130f}.info{min-width:0}.component{font-size:11px;color:var(--muted);margin-bottom:2px}.name{font-size:14px;font-weight:700;line-height:1.25;color:var(--accent);text-decoration:none}.name:hover{text-decoration:underline}.price{font-size:13px;font-weight:800;white-space:nowrap}.unknown{color:var(--muted);font-weight:500}.done .name{text-decoration:line-through;color:#8ba697}.footer{color:var(--muted);font-size:11px;text-align:center;margin-top:25px;line-height:1.5}.reset{margin-top:14px;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:10px;padding:9px 12px;font-size:12px;cursor:pointer}@media(max-width:430px){body{padding:14px 10px 35px}h1{font-size:26px}.item{grid-template-columns:31px 1fr auto;padding:11px 9px}.name{font-size:13px}.price{font-size:12px}}
+</style>
+</head>
+<body><div class="wrap">
+<div class="hero"><h1>ULTIMATE SETUP CHECKLIST</h1><div class="sub">Gaming • IT • Streaming · цены в CZK · нажми на товар, чтобы открыть магазин</div></div>
+<div class="stats"><div class="stat"><b id="remaining">0</b><span>ОСТАЛОСЬ</span></div><div class="stat"><b id="owned">0</b><span>КУПЛЕНО</span></div><div class="stat"><b id="cost">0 Kč</b><span>ОСТАЛОСЬ НА СЕТАП</span></div></div>
+<div id="list"></div><div style="text-align:center"><button class="reset" onclick="resetAll()">Сбросить статусы</button></div>
+<div class="footer">Цены ориентировочные. Перед покупкой проверь наличие, доставку и финальную цену.</div>
+</div>
+<script>
+const items=[
+["🖥 ИГРОВОЙ ПК","Процессор","AMD Ryzen 7 9800X3D",9990,"https://www.heureka.cz/?h%5Bfraze%5D=AMD+Ryzen+7+9800X3D"],
+["🖥 ИГРОВОЙ ПК","Видеокарта","MSI RTX 5070 Ti 16G Gaming Trio White",25600,"https://www.heureka.cz/?h%5Bfraze%5D=MSI+GeForce+RTX+5070+Ti+16G+GAMING+TRIO+OC+WHITE"],
+["🖥 ИГРОВОЙ ПК","Материнская плата","Gigabyte X870E AORUS PRO X3D ICE",8845,"https://www.heureka.cz/?h%5Bfraze%5D=gigabyte+x870e+aorus+pro+x3d+ice"],
+["🖥 ИГРОВОЙ ПК","СВО","Arctic Liquid Freezer III 360 A-RGB White",2989,"https://www.heureka.cz/?h%5Bfraze%5D=Arctic+Liquid+Freezer+III+360+A-RGB+White"],
+["🖥 ИГРОВОЙ ПК","Корпус","Lian Li O11 Dynamic EVO XL Black",5679,"https://www.heureka.cz/?h%5Bfraze%5D=Lian+Li+O11+Dynamic+EVO+XL+Black"],
+["🖥 ИГРОВОЙ ПК","Вентиляторы","Lian Li UNI FAN TL LCD 120 White (3-pack)",3630,"https://www.heureka.cz/?h%5Bfraze%5D=Lian+Li+UNI+FAN+TL+LCD+120+White+3+ks"],
+["🖥 ИГРОВОЙ ПК","Оперативная память","32GB DDR5 6000MHz CL30 White",11490,"https://www.heureka.cz/?h%5Bfraze%5D=32GB+DDR5+6000+CL30+White"],
+["🖥 ИГРОВОЙ ПК","SSD (Система)","Samsung 990 Pro 1TB",5999,"https://www.heureka.cz/?h%5Bfraze%5D=Samsung+990+Pro+1TB"],
+["🖥 ИГРОВОЙ ПК","SSD (Игры)","Kingston KC3000 2TB",8299,"https://www.heureka.cz/?h%5Bfraze%5D=Kingston+KC3000+2TB"],
+["🖥 ИГРОВОЙ ПК","Блок питания","Seasonic FOCUS GX-1000 White ATX 3.1",3761,"https://zdroje.heureka.cz/seasonic-focus-gx-1000-atx-3-2024-1000w-focus-gx-1000-v4-white/"],
+["🖥 МОНИТОР","Монитор","ASUS ROG Swift OLED PG27AQDP (26.5 / QHD / 480 Hz)",18890,"https://www.asus.com/displays-desktops/monitors/rog-republic-of-gamers/rog-swift-oled-pg27aqdp/"],
+["🎧 АУДИО И ЗВУК","Наушники","Beyerdynamic DT 900 Pro X",5479,"https://www.heureka.cz/?h%5Bfraze%5D=Beyerdynamic+DT+900+Pro+X"],
+["🎧 АУДИО И ЗВУК","Микрофон","Shure MV7X (XLR)",4160,"https://www.heureka.cz/?h%5Bfraze%5D=Shure+MV7X"],
+["🎧 АУДИО И ЗВУК","Активатор","FetHead / Klark Teknik CT 1",718,"https://www.heureka.cz/?h%5Bfraze%5D=Klark+Teknik+CT+1"],
+["🎧 АУДИО И ЗВУК","Микшер","TC Helicon GoXLR",4795,"https://www.heureka.cz/?h%5Bfraze%5D=TC+Helicon+GoXLR"],
+["🎧 АУДИО И ЗВУК","Пантограф","Elgato Wave Mic Arm",2799,"https://www.heureka.cz/?h%5Bfraze%5D=Elgato+Wave+Mic+Arm"],
+["🎧 АУДИО И ЗВУК","Кабели","2× XLR-кабель",800,"https://www.heureka.cz/?h%5Bfraze%5D=XLR+kabel+2x"],
+["⌨️ ДЕВАЙСЫ И КАМЕРА","Мышь","Razer Viper V4 Pro",0,"https://www.heureka.cz/?h%5Bfraze%5D=Razer+Viper+V4+Pro"],
+["⌨️ ДЕВАЙСЫ И КАМЕРА","Клавиатура","Wooting 60HE v2",4900,"https://wooting.io/wooting-60he-v2"],
+["⌨️ ДЕВАЙСЫ И КАМЕРА","Веб-камера","Elgato Facecam MK.2",3399,"https://www.heureka.cz/?h%5Bfraze%5D=Elgato+Facecam+MK.2"]
+];
+const key="ultimateSetupChecklist_v2";let saved=JSON.parse(localStorage.getItem(key)||"{}");const money=n=>n?"≈ "+n.toLocaleString("cs-CZ")+" Kč":"—";
+function render(){const list=document.getElementById("list");list.innerHTML="";let cat="";items.forEach((x,i)=>{if(x[0]!==cat){cat=x[0];let h=document.createElement("div");h.className="category";h.textContent=cat;list.appendChild(h)}let done=i===17||!!saved[i];let e=document.createElement("div");e.className="item"+(done?" done":"");e.innerHTML='<button class="check">'+(done?"✓":"")+'</button><div class="info"><div class="component">'+x[1]+'</div><a class="name" href="'+x[4]+'" target="_blank" rel="noopener">'+x[2]+'</a></div><div class="price '+(x[3]?"":"unknown")+'">'+money(x[3])+'</div>';e.querySelector(".check").onclick=()=>{if(i!==17){saved[i]=!done;localStorage.setItem(key,JSON.stringify(saved));render()}};list.appendChild(e)});let active=items.filter((x,i)=>i!==17&&!saved[i]);let done=items.filter((x,i)=>i===17||saved[i]);document.getElementById("remaining").textContent=active.length;document.getElementById("owned").textContent=done.length;document.getElementById("cost").textContent=money(active.reduce((s,x)=>s+x[3],0))}
+function resetAll(){saved={};localStorage.removeItem(key);render()}render();
+</script></body></html>
